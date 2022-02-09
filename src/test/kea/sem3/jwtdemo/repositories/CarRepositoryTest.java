@@ -16,8 +16,8 @@ class CarRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        carRepository.save(new Car("Citröen", "c3", 500));
-        carRepository.save(new Car("Citröen", "c1", 350));
+        carRepository.save(new Car("Citröen", "c3", 500, 100));
+        carRepository.save(new Car("Citröen", "c1", 350, 100));
     }
 
     @Test

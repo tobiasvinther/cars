@@ -1,6 +1,7 @@
 package kea.sem3.jwtdemo.configuration;
 
 import kea.sem3.jwtdemo.entity.*;
+import kea.sem3.jwtdemo.repositories.CarRepository;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
 import kea.sem3.jwtdemo.security.UserRepository;
 import org.springframework.boot.ApplicationArguments;
@@ -15,13 +16,14 @@ import java.time.Month;
 @Profile("!test")
 public class MakeTestData implements ApplicationRunner {
 
-
     UserRepository userRepository;
     MemberRepository memberRepository;
+    CarRepository carRepository;
 
-    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository) {
+    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.carRepository = carRepository;
     }
 
     public  void makePlainUsers(){
@@ -41,6 +43,14 @@ public class MakeTestData implements ApplicationRunner {
         Member m1 = new Member("xxx", "xxx@a.dk", "test12", "Kurt");
         m1.addRole(Role.USER);
         memberRepository.save(m1);
+
+
+        carRepository.save(new Car("Volvo", "C40", 560,10));
+        carRepository.save(new Car("Volvo", "V70", 500,10));
+        carRepository.save(new Car("Volvo", "V49", 400,10));
+        carRepository.save(new Car("Suzuki", "Vitara", 500,14));
+        carRepository.save(new Car("Suzuki", "Vitara", 500,14));
+        carRepository.save(new Car("Suzuki", "S-Cross", 500,14));
 
         System.out.println("########################################################################################");
         System.out.println("########################################################################################");
