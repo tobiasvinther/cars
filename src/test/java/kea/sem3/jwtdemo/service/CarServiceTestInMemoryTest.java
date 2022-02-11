@@ -56,7 +56,27 @@ class CarServiceInMemoryTest {
     void addCar() {
     }
 
-    @Test
-    void deleteCar() {
+    // @Test
+    public void editCar() throws Exception {
+        //New price and discount for the ford
+        CarRequest carToEdit = new CarRequest("Ford", "Focus", 500, 20);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/cars/" + carFordId)
+                        .contentType("application/json")
+                        .accept("application/json")
+                        .content(objectMapper.writeValueAsString(carToEdit)))
+                .andExpect(status().isOk());
+        Car editedCarFromDB = carRepository.findById(carFordId).orElse(null);
+        assertEquals(500, editedCarFromDB.getPricePrDay());
+        assertEquals(20, editedCarFromDB.getBestDiscount());
     }
+
+    @Test
+    void deleteCar() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/" + carFordId))
+                .andExpect(status().isOk());
+        //Verify that we only have one car in the database
+        assertEquals(1, carRepository.count());
+    }
+
 }
