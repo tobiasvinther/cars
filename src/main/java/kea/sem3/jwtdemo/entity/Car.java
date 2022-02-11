@@ -2,12 +2,16 @@ package kea.sem3.jwtdemo.entity;
 
 import kea.sem3.jwtdemo.dto.CarRequest;
 import kea.sem3.jwtdemo.dto.CarResponse;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 public class Car {
     @Id
@@ -39,33 +43,5 @@ public class Car {
         this.model = body.getModel();
         this.pricePrDay = (int) body.getPricePrDay();
         this.bestDiscount = body.getBestDiscount();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getPricePrDay() {
-        return pricePrDay;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public LocalDateTime getLastEdited() {
-        return lastEdited;
-    }
-
-    public double getBestDiscount() {
-        return bestDiscount;
     }
 }
