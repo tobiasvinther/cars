@@ -7,6 +7,7 @@ import kea.sem3.jwtdemo.dto.CarRequest;
 import kea.sem3.jwtdemo.dto.CarResponse;
 import kea.sem3.jwtdemo.entity.Car;
 import kea.sem3.jwtdemo.repositories.CarRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,21 +34,21 @@ class CarControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     CarRepository carRepository;
-
-    //Do something here
-
     @Autowired
     private ObjectMapper objectMapper;
-
     static int carFordId, carSuzukiId;
 
     @BeforeEach
     public void setup() {
         carFordId = carRepository.save(new Car("Ford", "Focus", 400, 10)).getId();
         carSuzukiId = carRepository.save(new Car("Suzuki", "Vitara", 500, 14)).getId();
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        carRepository.deleteAll();
     }
 
     @Test
@@ -66,6 +67,7 @@ class CarControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(carFordId))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.model").value("Focus"));
+        System.out.println("---End of testCarByID---");
     }
 
     @Test
@@ -85,6 +87,7 @@ class CarControllerTest {
                 //Another way
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Focus")))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Vitara")));
+        System.out.println("---End of testAllCars---");
     }
 
     @Test
@@ -101,17 +104,35 @@ class CarControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
         //Verify that it actually ended in the database
         assertEquals(3, carRepository.count()); //I expect three cars: two from the @BeforeEach and one we made inside this method
+        System.out.println("---End of testAddCar---");
 
 
     }
 
-    // @Test
-    public void editCar() throws Exception {
+    /*
+    @Test
+    public void testEditCar() throws Exception {
+        //New price and discount for the ford
+        CarRequest carToEdit = new CarRequest("Ford", "Focus", 500, 20);
 
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/cars/" + carFordId)
+                        .contentType("application/json")
+                        .accept("application/json")
+                        .content(objectMapper.writeValueAsString(carToEdit)))
+                .andExpect(status().isOk());
+        Car editedCarFromDB = carRepository.findById(carFordId).orElse(null);
+        assertEquals(500, editedCarFromDB.getPricePrDay());
+        assertEquals(20, editedCarFromDB.getBestDiscount());
     }
 
     @Test
-    void deleteCar() throws Exception {
-
+    void testDeleteCar() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/" + carFordId))
+                .andExpect(status().isOk());
+        //Verify that we only have one car in the database
+        assertEquals(1, carRepository.count());
+        System.out.println("---End of testDeleteCar---");
     }
+
+     */
 }

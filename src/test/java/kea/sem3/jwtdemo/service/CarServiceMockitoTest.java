@@ -11,12 +11,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class CarServiceMockitoTest {
@@ -63,5 +65,4 @@ class CarServiceMockitoTest {
         CarResponse res = carService.addCar(new CarRequest(carWithId.getBrand(),carWithId.getModel(),carWithId.getPricePrDay(),10));
         assertEquals(1000,res.getId());
     }
-
 }

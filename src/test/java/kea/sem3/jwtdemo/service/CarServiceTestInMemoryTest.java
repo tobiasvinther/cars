@@ -1,5 +1,6 @@
 package kea.sem3.jwtdemo.service;
 
+import kea.sem3.jwtdemo.dto.CarRequest;
 import kea.sem3.jwtdemo.dto.CarResponse;
 import kea.sem3.jwtdemo.entity.Car;
 import kea.sem3.jwtdemo.repositories.CarRepository;
@@ -8,12 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //it's transactional, meaning that after each test any changes made to database are rolled back
 //and it uses an in-memory database (also because some stuff in application.properties)
@@ -56,27 +59,6 @@ class CarServiceInMemoryTest {
     void addCar() {
     }
 
-    // @Test
-    public void editCar() throws Exception {
-        //New price and discount for the ford
-        CarRequest carToEdit = new CarRequest("Ford", "Focus", 500, 20);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/cars/" + carFordId)
-                        .contentType("application/json")
-                        .accept("application/json")
-                        .content(objectMapper.writeValueAsString(carToEdit)))
-                .andExpect(status().isOk());
-        Car editedCarFromDB = carRepository.findById(carFordId).orElse(null);
-        assertEquals(500, editedCarFromDB.getPricePrDay());
-        assertEquals(20, editedCarFromDB.getBestDiscount());
-    }
-
-    @Test
-    void deleteCar() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/" + carFordId))
-                .andExpect(status().isOk());
-        //Verify that we only have one car in the database
-        assertEquals(1, carRepository.count());
-    }
 
 }

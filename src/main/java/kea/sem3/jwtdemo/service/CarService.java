@@ -29,7 +29,7 @@ public class CarService {
         return CarResponse.getCarsFromEntities(cars);
     }
 
-    //returning a CarResponse by findind a
+    //returning a CarResponse
     public CarResponse getCar(int id,boolean all) throws Exception {
         Car car = carRepository.findById(id).orElseThrow(() -> new Client4xxException("No car with this id exists"));
         return new CarResponse(car, all);
@@ -40,8 +40,13 @@ public class CarService {
         return new CarResponse(carNew, true);
     }
 
-    public CarResponse editCar(CarRequest body,int id){
-        return null;
+    public CarResponse editCar(CarRequest body,int id) throws Exception {
+        CarResponse editedCar = getCar(id,true);
+        editedCar.setBrand(body.getBrand());
+        editedCar.setModel(body.getModel());
+        editedCar.setPricePrDay(body.getPricePrDay());
+        editedCar.setBestDiscount(body.getBestDiscount());
+        return editedCar;
     }
 
     public void deleteCar(int id) {
