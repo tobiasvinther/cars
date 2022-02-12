@@ -109,7 +109,6 @@ class CarControllerTest {
 
     }
 
-    /*
     @Test
     public void testEditCar() throws Exception {
         //New price and discount for the ford
@@ -134,5 +133,5 @@ class CarControllerTest {
         System.out.println("---End of testDeleteCar---");
     }
 
-     */
+
 }

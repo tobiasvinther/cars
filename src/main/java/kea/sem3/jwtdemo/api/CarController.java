@@ -36,7 +36,9 @@ public class CarController {
         return carService.editCar(body, id);}
 
     @DeleteMapping("/{id}")
-    public void deleteCar(@PathVariable int id){}
+    public void deleteCar(@PathVariable int id) throws Exception {
+        carService.deleteCar(id);
+    }
 
 }
 

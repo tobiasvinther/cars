@@ -41,16 +41,32 @@ public class CarService {
     }
 
     public CarResponse editCar(CarRequest body,int id) throws Exception {
+        //1. create car from carRequest body (such a constructor exists)
+        //2. save that car (should overwrite if it has the same id as existing id)
+        //3. convert to carResponse and return
+        Car editedCar = new Car(body);
+        editedCar.setId(id);
+        carRepository.save(editedCar);
+        System.out.println("Car edited");
+
+        return getCar(id, true);
+
+        /*
         CarResponse editedCar = getCar(id,true);
         editedCar.setBrand(body.getBrand());
         editedCar.setModel(body.getModel());
         editedCar.setPricePrDay(body.getPricePrDay());
         editedCar.setBestDiscount(body.getBestDiscount());
+        carRepository.save(editedCar);
+
         return editedCar;
+         */
     }
 
-    public void deleteCar(int id) {
-        //return null;
+    public void deleteCar(int id) throws Exception {
+        Car carToDelete = carRepository.findById(id).orElseThrow(() -> new Exception("No car with this id exists"));
+        carRepository.delete(carToDelete);
+        System.out.println("Car deleted");
     }
 }
 
