@@ -1,12 +1,11 @@
 package kea.sem3.jwtdemo.entity;
 
+import kea.sem3.jwtdemo.dto.CarRequest;
+import kea.sem3.jwtdemo.dto.CarResponse;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,12 +24,19 @@ public class Reservation {
     @UpdateTimestamp
     private LocalDateTime lastEdited;
 
+    @ManyToOne //the car that is reserved
+    private Car reservedCar;
+    @ManyToOne
+    private Member reservingMember;
+
     public Reservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, LocalDateTime rentalDate) {
+    public Reservation(LocalDateTime reservationDate, LocalDateTime rentalDate, Car reservedCar, Member reservingMember) {
         this.reservationDate = reservationDate;
         this.rentalDate = rentalDate;
+        this.reservedCar = reservedCar;
+        this.reservingMember = reservingMember;
     }
 
     public int getId() {

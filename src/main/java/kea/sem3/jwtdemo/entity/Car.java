@@ -9,6 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,12 +24,12 @@ public class Car {
     private String model;
     private int pricePrDay;
     private double bestDiscount;
-
     @CreationTimestamp
     private LocalDateTime created;
-
     @UpdateTimestamp
     private LocalDateTime lastEdited;
+    @OneToMany(mappedBy = "reservedCar") //the reservations this car is and has been part of
+    List<Reservation> reservations = new ArrayList<>();
 
     public Car() {
     }

@@ -18,6 +18,7 @@ class ReservationRepositoryTest {
     ReservationRepository reservationRepository;
     static int reservationId1;
 
+    /*
     @BeforeEach
     void setUp() {
         Reservation reservation1 = reservationRepository.save(new Reservation(LocalDateTime.now(), LocalDateTime.now()));
@@ -29,6 +30,8 @@ class ReservationRepositoryTest {
     public void reservationCountTest() {
         assertEquals(1, reservationRepository.count());
     }
+
+     */
 
     /*
     @Test

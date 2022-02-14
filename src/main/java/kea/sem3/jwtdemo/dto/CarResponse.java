@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarResponse {
     int id;
-    //@Enumerated(EnumType.STRING)
-    //Change CarBrand into a String if you are not using an enum for this field
     String brand;
     String model;
     double pricePrDay;

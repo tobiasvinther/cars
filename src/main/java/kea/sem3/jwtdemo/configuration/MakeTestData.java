@@ -3,6 +3,7 @@ package kea.sem3.jwtdemo.configuration;
 import kea.sem3.jwtdemo.entity.*;
 import kea.sem3.jwtdemo.repositories.CarRepository;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
+import kea.sem3.jwtdemo.repositories.ReservationRepository;
 import kea.sem3.jwtdemo.security.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 @Controller
@@ -19,11 +21,13 @@ public class MakeTestData implements ApplicationRunner {
     UserRepository userRepository;
     MemberRepository memberRepository;
     CarRepository carRepository;
+    ReservationRepository reservationRepository;
 
-    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository) {
+    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository, ReservationRepository reservationRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public  void makePlainUsers(){
@@ -54,6 +58,9 @@ public class MakeTestData implements ApplicationRunner {
         carRepository.save(new Car("Suzuki", "Vitara", 500,14));
         carRepository.save(new Car("Suzuki", "Vitara", 500,14));
         carRepository.save(new Car("Suzuki", "S-Cross", 500,14));
+
+        reservationRepository.save(new Reservation(LocalDateTime.now(), LocalDateTime.now(), carRepository.getById(1), m1));
+        reservationRepository.save(new Reservation(LocalDateTime.now(), LocalDateTime.now(), carRepository.getById(2), m2));
 
         System.out.println("########################################################################################");
         System.out.println("########################################################################################");
