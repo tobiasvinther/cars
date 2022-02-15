@@ -17,8 +17,8 @@ class MemberRepositoryTest {
     //lav evt om til beforeAll
     @BeforeEach
     void setUp() {
-        memberRepository.save(new Member("xxx", "xxx@a.dk", "test12", "Peter"));
-        memberRepository.save(new Member("zzz", "zzz@a.dk", "test12", "z-peter"));
+        memberRepository.save(new Member("KW","kw@a.dk","test12","Kurt","Wonnegut","Lyngbyvje 34","Lyngby","2800"));
+        memberRepository.save(new Member("HW","hw@a.dk","test12","Hanne","Wonnegut","Lyngbyvje 34","Lyngby","2800"));
     }
     @Test
     public void testCount() {

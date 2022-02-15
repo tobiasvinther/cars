@@ -1,27 +1,36 @@
 package kea.sem3.jwtdemo.api;
 
-import kea.sem3.jwtdemo.entity.Member;
+import kea.sem3.jwtdemo.dto.MemberRequest;
+import kea.sem3.jwtdemo.dto.MemberResponse;
 import kea.sem3.jwtdemo.service.MemberService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/members")
 public class MemberController {
-
-    private MemberService memberService;
+    MemberService memberService;
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
-    //only ADMIN role should be able to see list of all members
     @GetMapping
-    public List<Member> getAllMembers(){
-        return memberService.getAllMembers();
+    public ResponseEntity<List<MemberResponse>> getAllMembers() {
+        return ResponseEntity.ok(memberService.getMembers());
+    }
+
+    @GetMapping("/{username}")
+    public MemberResponse getMembersFromUserName(@PathVariable String username) {
+        return (memberService.getMemberByUserName(username));
+    }
+
+    @PostMapping()
+    public MemberResponse AddMember(@RequestBody MemberRequest body) {
+        System.out.println("Hello");
+        return memberService.addMember(body);
     }
 
 }
