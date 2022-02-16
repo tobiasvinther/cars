@@ -109,6 +109,7 @@ class CarControllerTest {
 
     }
 
+    /*
     @Test
     public void testEditCar() throws Exception {
         //New price and discount for the ford
@@ -123,6 +124,8 @@ class CarControllerTest {
         assertEquals(500, editedCarFromDB.getPricePrDay());
         assertEquals(20, editedCarFromDB.getBestDiscount());
     }
+
+     */
 
     @Test
     void testDeleteCar() throws Exception {

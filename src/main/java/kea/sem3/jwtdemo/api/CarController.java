@@ -33,7 +33,8 @@ public class CarController {
 
     @PutMapping("/{id}") //@RequestBody laver JSON om til CarRequest-klasse
     public CarResponse editCar(@RequestBody CarRequest body, @PathVariable int id) throws Exception {
-        return carService.editCar(body, id);}
+        return carService.editCar(body, id);
+    }
 
     @PatchMapping("/{id}/{newPrice}")
     public void editPrice(@PathVariable int id, @PathVariable double newPrice) throws Exception {

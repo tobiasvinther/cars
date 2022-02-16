@@ -1,13 +1,19 @@
 package kea.sem3.jwtdemo.service;
 
+import kea.sem3.jwtdemo.dto.CarRequest;
+import kea.sem3.jwtdemo.dto.CarResponse;
 import kea.sem3.jwtdemo.dto.MemberRequest;
 import kea.sem3.jwtdemo.dto.MemberResponse;
+import kea.sem3.jwtdemo.entity.Car;
 import kea.sem3.jwtdemo.entity.Member;
 import kea.sem3.jwtdemo.entity.Role;
 import kea.sem3.jwtdemo.error.Client4xxException;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,5 +49,11 @@ public class MemberService {
         member.addRole(Role.USER);
         member = memberRepository.save(member);
         return new MemberResponse(member.getUsername(), member.getCreated(), member.getRoles());
+    }
+
+    public void deleteMember(String id) throws Exception {
+        Member memberToDelete = memberRepository.findById(id).orElseThrow(() -> new Exception("No member with this id exists"));
+        memberRepository.delete(memberToDelete);
+        System.out.println("Member deleted");
     }
 }

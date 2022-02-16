@@ -33,4 +33,10 @@ public class MemberController {
         return memberService.addMember(body);
     }
 
+    @DeleteMapping("/{username}")
+    public void deleteMember(@PathVariable String username) throws Exception {
+        memberService.deleteMember(username);
+
+    }
+
 }
