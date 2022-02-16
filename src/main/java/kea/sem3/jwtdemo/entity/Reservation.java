@@ -6,20 +6,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //man kunne også bruge AUTO
     private int id;
 
-    private LocalDateTime reservationDate;
-    private LocalDateTime rentalDate;
-
     @CreationTimestamp
-    private LocalDateTime created;
+    private LocalDate reservationDate;
+    private LocalDate rentalDate;
 
     @UpdateTimestamp
     private LocalDateTime lastEdited;
@@ -32,27 +31,24 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, LocalDateTime rentalDate, Car reservedCar, Member reservingMember) {
-        this.reservationDate = reservationDate;
+    public Reservation(LocalDate rentalDate, Car reservedCar, Member reservingMember) {
         this.rentalDate = rentalDate;
         this.reservedCar = reservedCar;
         this.reservingMember = reservingMember;
+        reservedCar.addReservation(this); //add reservation to Car's list of reservations
+        reservingMember.addReservation(this); //add reservation to Member's list of reservations
     }
 
     public int getId() {
         return id;
     }
 
-    public LocalDateTime getReservationDate() {
+    public LocalDate getReservationDate() {
         return reservationDate;
     }
 
-    public LocalDateTime getRentalDate() {
+    public LocalDate getRentalDate() {
         return rentalDate;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
     }
 
     public LocalDateTime getLastEdited() {

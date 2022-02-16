@@ -51,16 +51,29 @@ public class MakeTestData implements ApplicationRunner {
         m2.addRole(Role.USER);
         memberRepository.save(m2);
 
-
-        carRepository.save(new Car("Volvo", "C40", 560,10));
+        Car carVolvo = carRepository.save(new Car("Volvo", "C40", 560,10));
         carRepository.save(new Car("Volvo", "V70", 500,10));
         carRepository.save(new Car("Volvo", "V49", 400,10));
         carRepository.save(new Car("Suzuki", "Vitara", 500,14));
         carRepository.save(new Car("Suzuki", "Vitara", 500,14));
         carRepository.save(new Car("Suzuki", "S-Cross", 500,14));
 
-        reservationRepository.save(new Reservation(LocalDateTime.now(), LocalDateTime.now(), carRepository.getById(1), m1));
-        reservationRepository.save(new Reservation(LocalDateTime.now(), LocalDateTime.now(), carRepository.getById(2), m2));
+        //Create a Reservation
+        Reservation res1 = new Reservation(LocalDate.of(2022,3,1),carVolvo,m1);
+        reservationRepository.save(res1);
+        Reservation res = reservationRepository.
+                findReservationByReservedCar_IdAndRentalDate(carVolvo.getId(),(LocalDate.of(2022,3,1)));
+        if(res == null) {
+
+            Reservation res2 = new Reservation(LocalDate.of(2022, 3, 1), carVolvo, m2);
+            reservationRepository.save(res2);
+        } else{
+            System.out.println("Car is reserved this day");
+        }
+
+
+
+
 
         System.out.println("########################################################################################");
         System.out.println("########################################################################################");

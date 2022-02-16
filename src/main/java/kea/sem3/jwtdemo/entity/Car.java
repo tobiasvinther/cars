@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,7 +30,8 @@ public class Car {
     @UpdateTimestamp
     private LocalDateTime lastEdited;
     @OneToMany(mappedBy = "reservedCar") //the reservations this car is and has been part of
-    List<Reservation> reservations = new ArrayList<>();
+    private Set<Reservation> reservations = new HashSet<>();
+    //List<Reservation> reservations = new ArrayList<>(); //min gamle version
 
     public Car() {
     }
@@ -47,4 +49,18 @@ public class Car {
         this.pricePrDay = (int) body.getPricePrDay();
         this.bestDiscount = body.getBestDiscount();
     }
+
+    public void addReservation(Reservation reservation){
+        /*
+        //my solution
+        for(Reservation existingRes : reservations) {
+            if(reservation.getRentalDate().equals(existingRes.getRentalDate())) {
+                throw new Exception("Car already booked");
+            }
+        }
+        */
+
+        reservations.add(reservation);
+    }
+
 }

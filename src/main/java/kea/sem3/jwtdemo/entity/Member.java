@@ -8,7 +8,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -42,6 +47,9 @@ public class Member extends BaseUser {
     //Number between 0 and 10, ranking the customer
     byte ranking;
 
+    @OneToMany(mappedBy = "reservingMember") //the reservations this member has
+    private Set<Reservation> reservations = new HashSet<>();
+
     public Member(String username, String email, String password, String firstName, String lastName, String street, String city, String zip) {
         super(username, email, password);
         this.firstName = firstName;
@@ -59,5 +67,9 @@ public class Member extends BaseUser {
     }
 
     public Member() {}
+
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+    }
 
 }

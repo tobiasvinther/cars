@@ -40,27 +40,21 @@ public class CarService {
         return new CarResponse(carNew, true);
     }
 
-    public CarResponse editCar(CarRequest body,int id) throws Exception {
-        //1. create car from carRequest body (such a constructor exists)
-        //2. save that car (should overwrite if it has the same id as existing id)
-        //3. convert to carResponse and return
-        Car editedCar = new Car(body);
-        editedCar.setId(id);
-        carRepository.save(editedCar);
-        System.out.println("Car edited");
+    //PUT
+    public CarResponse editCar(CarRequest carToEdit, int carId){
+        Car car = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No car with provided ID found"));
+        car.setBrand(carToEdit.getBrand());
+        car.setModel(carToEdit.getModel());
+        car.setPricePrDay((int) carToEdit.getPricePrDay());
+        carRepository.save(car);
+        return new CarResponse(car, true);
+    }
 
-        return getCar(id, true);
-
-        /*
-        CarResponse editedCar = getCar(id,true);
-        editedCar.setBrand(body.getBrand());
-        editedCar.setModel(body.getModel());
-        editedCar.setPricePrDay(body.getPricePrDay());
-        editedCar.setBestDiscount(body.getBestDiscount());
-        carRepository.save(editedCar);
-
-        return editedCar;
-         */
+    //Service method for PATCH
+    public void updatePrice(int carId,double newPricePrDay){
+        Car car = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No car with provided ID found"));
+        car.setPricePrDay((int) newPricePrDay);
+        carRepository.save(car);
     }
 
     public void deleteCar(int id) throws Exception {

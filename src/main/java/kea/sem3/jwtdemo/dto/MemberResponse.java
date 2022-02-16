@@ -35,9 +35,9 @@ public class MemberResponse {
     LocalDateTime created;
     @UpdateTimestamp
     LocalDateTime edited;
-    Boolean isApproved; //Make sure you understand why we use Boolean and not boolean
+    Boolean isApproved; //Boolean because it can be Null (which a boolean can't)
     //Number between 0 and 10, ranking the customer
-    Byte ranking; //Make sure you understand why we use Byte and not byte
+    Byte ranking; //Byte because it can be Null (which a byte can't)
 
     //Meant to be used as response when new users are created
     public MemberResponse(String username, LocalDateTime created, List<Role> roleList){
