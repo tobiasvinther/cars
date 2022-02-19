@@ -1,5 +1,7 @@
 package kea.sem3.jwtdemo.api;
 
+import kea.sem3.jwtdemo.dto.CarRequest;
+import kea.sem3.jwtdemo.dto.CarResponse;
 import kea.sem3.jwtdemo.dto.MemberRequest;
 import kea.sem3.jwtdemo.dto.MemberResponse;
 import kea.sem3.jwtdemo.service.MemberService;
@@ -31,6 +33,11 @@ public class MemberController {
     public MemberResponse AddMember(@RequestBody MemberRequest body) {
         System.out.println("Hello");
         return memberService.addMember(body);
+    }
+
+    @PutMapping("/{id}")
+    public MemberResponse editMember(@RequestBody MemberRequest body, @PathVariable String id) throws Exception {
+        return memberService.editMember(body, id);
     }
 
     @DeleteMapping("/{username}")

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //man kunne også bruge AUTO
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //man kunne også bruge .AUTO
     private int id;
 
     @CreationTimestamp

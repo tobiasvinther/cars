@@ -51,6 +51,19 @@ public class MemberService {
         return new MemberResponse(member.getUsername(), member.getCreated(), member.getRoles());
     }
 
+    //PUT
+    public MemberResponse editMember(MemberRequest memberToEdit, String memberUsername){
+        Member member = memberRepository.findById(memberUsername).orElseThrow(()-> new Client4xxException("No member with provided ID found"));
+        member.setFirstName(memberToEdit.getFirstName());
+        member.setLastName(memberToEdit.getLastName());
+        member.setFirstName(memberToEdit.getFirstName());
+        member.setStreet(memberToEdit.getStreet());
+        member.setCity(memberToEdit.getCity());
+        member.setZip(memberToEdit.getZip());
+        memberRepository.save(member);
+        return new MemberResponse(member, true);
+    }
+
     public void deleteMember(String id) throws Exception {
         Member memberToDelete = memberRepository.findById(id).orElseThrow(() -> new Exception("No member with this id exists"));
         memberRepository.delete(memberToDelete);
