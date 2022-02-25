@@ -73,7 +73,7 @@ class MemberControllerTest {
     void deleteMember() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/members/" + member1Id))
                 .andExpect(status().isOk());
-        //Verify that we only have one member in the database
+        //Verify that we only have one member left in the database after deleting one
         assertEquals(1, memberRepository.count());
     }
 }

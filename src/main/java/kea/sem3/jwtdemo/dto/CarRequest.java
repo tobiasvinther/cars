@@ -13,7 +13,7 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarRequest {
-    //mapped so it matches JSON, so it can be converted
+    //mapped so it matches JSON, so it can be converted, otherwise it wouldn't work
     private String brand;
     private String model;
     private double pricePrDay;

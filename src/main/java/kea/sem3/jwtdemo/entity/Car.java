@@ -9,9 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,9 +27,10 @@ public class Car {
     private LocalDateTime created;
     @UpdateTimestamp
     private LocalDateTime lastEdited;
-    @OneToMany(mappedBy = "reservedCar") //the reservations this car is and has been part of
+    //if problems related to transactional, then use EAGER
+    //@OneToMany(mappedBy = "reservedCar", fetch = FetchType.EAGER) //the reservations this car is in
+    @OneToMany(mappedBy = "reservedCar") //the reservations this car is in
     private Set<Reservation> reservations = new HashSet<>();
-    //List<Reservation> reservations = new ArrayList<>(); //min gamle version
 
     public Car() {
     }

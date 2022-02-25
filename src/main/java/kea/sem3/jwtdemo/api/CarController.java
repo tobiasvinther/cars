@@ -21,11 +21,13 @@ public class CarController {
         return carService.getCars();
     }
 
+    //curly brackets viser at det er en variabel der kommer ind og den hænger sammen med @PathVariable
     @GetMapping("/{id}")
     public CarResponse getCar(@PathVariable int id) throws Exception {
         return carService.getCar(id, false);
     }
 
+    //HTTP's request body kommer ind som JSON, men konverteres af Jackson-frameworket da dataen matcher dto-klassens fields
     @PostMapping
     public CarResponse addCar(@RequestBody CarRequest body){
         return carService.addCar(body);
