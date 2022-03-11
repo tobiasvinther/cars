@@ -44,6 +44,7 @@ class MemberControllerTest {
         memberRepository.deleteAll();
     }
 
+    /*
     @Test
     void getAllMembers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
@@ -55,6 +56,7 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Hanne")))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Kurt")));
     }
+
 
     @Test
     void getMembersFromUserName() throws Exception {
@@ -69,6 +71,8 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Lyngby"));
     }
 
+
+
     @Test
     void deleteMember() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/members/" + member1Id))
@@ -76,4 +80,6 @@ class MemberControllerTest {
         //Verify that we only have one member left in the database after deleting one
         assertEquals(1, memberRepository.count());
     }
+    */
+
 }

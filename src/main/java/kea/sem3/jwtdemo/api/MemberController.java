@@ -7,7 +7,9 @@ import kea.sem3.jwtdemo.dto.MemberResponse;
 import kea.sem3.jwtdemo.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,22 +26,32 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMembers());
     }
 
+    @GetMapping("/fromtoken/user")
+    @RolesAllowed({"USER","ADMIN"})
+    public MemberResponse getAuthenticatedMember(Principal principal) {
+        return (memberService.getMemberByUserName(principal.getName()));
+    }
+
+    @RolesAllowed("ADMIN")
     @GetMapping("/{username}")
     public MemberResponse getMembersFromUserName(@PathVariable String username) {
         return (memberService.getMemberByUserName(username));
     }
 
+    @RolesAllowed("ADMIN")
     @PostMapping()
     public MemberResponse AddMember(@RequestBody MemberRequest body) {
         System.out.println("Hello");
         return memberService.addMember(body);
     }
 
+    @RolesAllowed("ADMIN")
     @PutMapping("/{id}")
     public MemberResponse editMember(@RequestBody MemberRequest body, @PathVariable String id) throws Exception {
         return memberService.editMember(body, id);
     }
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/{username}")
     public void deleteMember(@PathVariable String username) throws Exception {
         memberService.deleteMember(username);
